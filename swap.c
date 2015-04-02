@@ -27,9 +27,9 @@ int main()
 {
     double a,b;
     int cou;
-    cou = scanf("%f",&a);
+    cou = scanf("%lf %lf",&a,&b);
     //a,b = (b,a);
-    printf("%f\n",a);
+    printf("%lf, %lf\n",a,b);
     printf("%d\n",cou);
     double tmp;
     tmp = a;
