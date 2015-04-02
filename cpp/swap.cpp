@@ -27,14 +27,17 @@ using namespace std;
 
 int main()
 {
-    double a,b;
-    int cou;
+    float a=0;
+    double b=0;
+    //double a=0,b=0; #wrong scanf
     /*fuck you c style*/
-    printf("Enter your number: ");
-    cou = scanf("%f",&a);
+    printf("Enter your number: \n");
+    scanf("%f",&a);
+    scanf("%lf",&b);
     //a,b = (b,a);
     printf("%f\n",a);
-    printf("%d\n",cou);
+    printf("b=%f",b);
+    cout<<a<<" "<<b<<endl;
     double tmp;
     tmp = a;
     //a = b;
