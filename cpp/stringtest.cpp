@@ -32,4 +32,5 @@ int main()
     cout<<f+l<<endl;
     const char* c_str = (f+l).c_str();
     cout<<c_str<<endl;
+    cout<<f+l+"***"<<endl;
 }
