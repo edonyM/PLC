@@ -26,6 +26,17 @@
  */
 #include <iostream>
 #include <limits>
+#include <string>
+#include <vector>
+#include <bitset>
+#include <cstring> //c-style string standard library
+
+using std::cout;
+using std::cin;
+using std::endl;
+using std::string;
+using std::vector;
+using std::bitset;
 
 void out()
 {
@@ -80,7 +91,7 @@ void DeclareDefinition()
              <<"declare is declaring a variable to the program\n"
              <<"you can declared the variable more than one time but you can not redefinition\n";
     extern int i; //declare but does not define i
-    extern double pi = 3.14159; //this is definition for the declared pi are initialized
+    //extern double pi = 3.14159; //this is definition for the declared pi are initialized
                                 //this working with global extern declaration is possibly not in function
     int idd; //declare and define idd
 }
@@ -111,11 +122,167 @@ void Reference()
     const int &ri = dval;/*int tmp = dval;
                           *const int &ri = tmp;
                           */
+    //int &rv;//reference initialized when definition
+    //rv = i;
+    //cout<<"reference definition: "<<rv<<endl;
 }
 void Class()
 {
-
+    std::cout<<"//Each class defines an interface and implementation\n";
+    std::cout<<"//The interface consists of the operations that we expect code that uses the class to execute\n";
+    std::cout<<"//The implementation typically includes the data needed by the class.\n";
+    std::cout<<"//The implementation also includes any functions needed to define the class but that are not intended for general use\n";
+    std::cout<<"//Define a class: define interface-->class data && some other functions to implement\n";
 }
+void HeadFile()
+{
+    std::cout<<"head file accumulate the declare\n";
+    std::cout<<"head file should not include definition to avoid multi-definition link error except class definition, const object and inline function\n";
+    std::cout<<"#include <> //standard head file\n";
+    std::cout<<"#include \"\" //customized head file\n";
+}
+void StdLib()
+{
+    //using std::cout;
+    //using std::cin;
+    //using std::string;
+    cout<<"Standard Library includes string, vector and bitset\n";
+    /*******std::string******/
+    string s1;//default construct
+    string s2("edony");
+    string s3(s2);
+    string s4(5,'e');
+    cout<<s1<<endl
+        <<s2<<endl
+        <<s3<<endl
+        <<s4<<endl
+        <<s2.empty()<<endl
+        <<s3.size()<<endl //string size type is string::size_type
+        <<s3[1]<<endl;
+    cout<<"read a line\n";
+    string line;
+    cin.get();//ignore the \n in cin buffer
+    getline(cin,line);
+    cout<<line<<endl;
+    const char* fromstr;
+    fromstr = s2.c_str();
+    cout<<fromstr<<endl;
+    /*******std::vector******/
+    vector<int> ivec1(2);//default int vector
+    vector<int> ivec2(ivec1);
+    int i=12;
+    vector<int> ivec3(3,i);
+    ivec3.push_back(i+2);
+    ivec3.size();//size type is vector<int>::size_type
+    ivec3.empty();
+    /*******iterator******/
+    vector<int>::iterator iter;
+    iter = ivec2.begin();
+    *iter = i;
+    cout<<"exer3.15: "<<ivec2[0]<<endl;
+    for(vector<int>::const_iterator i = ivec3.begin();
+            i != ivec3.end();
+            i++)
+    {
+        cout<<*i<<endl;
+    }
+    for(vector<int>::size_type is=0;
+            is != ivec3.size();
+            is++)
+    {
+        cout<<ivec3[is]<<endl;
+    }
+    /*******bitset******/
+    bitset<16> bitvec1(0xffff);//0~15 equals 1
+    bitset<32> bitvec2(0xffff);//0~15 equals 1 and 16~31 equals 0
+    string strval("1100");
+    bitset<32> bitvec3(strval);
+    cout<<bitvec3<<endl;
+    cout<<bitvec2<<endl;
+    cout<<bitvec1<<endl;
+}
+void PointArray()
+{
+    //if you are not focus on the performence of the code ,you'd better use vector rather than array
+    /******* Array Definition and Initialization ******/
+    // both buf_size and max_files are const
+    const unsigned buf_size = 512, max_files = 20;
+    int staff_size = 27; // nonconst
+    //const unsigned sz = get_size(); // const value not known until run time
+    char input_buffer[buf_size]; // ok: const variable
+    string fileTable[max_files + 1]; // ok: constant expression
+    //double salaries[staff_size]; // error: non const variable
+    //int test_scores[get_size()]; // error: non const expression
+    //int vals[sz]; // error: size not known until run time
+    /******* Pointer ******/
+    cout<<"RULE NO.1\n"
+        <<"... avoid using non-initialized pointer\n"
+        <<"... pointed object comes first\n"
+        <<"... initialize the pointer point to object or NULL\n";
+    const int c_ival = 0;
+    int* pi;
+    //pi = c_ival;//legal but call segmentation fault
+    pi=NULL;
+    cout<<" : "<<pi<<endl;
+    // const object pointer
+    double pd = 3.14;
+    const double d = 23.4;
+    const double *cptr=&d;
+    const void* cpv=&d;
+    const double* cptr_=&pd;
+    cout<<"point to const pointing plain: "<<*cptr_<<endl;
+    //const pointer
+    int num = 2;
+    int* const curErr = &num;
+    *curErr = 23;
+    cout<<curErr<<endl;
+    //typedef and pointer
+    typedef string* pstring;
+    string s("edony");
+    const pstring cstr=&s;//equals string* const cstr
+    pstring const cstr1=&s;//same type with cstr
+    /*******c-style string******/
+    char a1[]={'C','+','+'};//no NULL,not c-style string
+    char a2[]={'C','+','+','\0'};
+    char a3[]= "C++";//c-style string(NULL terminator added automatically)
+    const char *cp = "C++";//c-style
+    //s-style string standard library
+    //#include <cstring>
+    cout<<"origin length"<<strlen(cp)<<endl;
+    cout<<"strcmp: "<<strcmp(cp,a2)<<endl;
+    //a2 point to new a c-style string that equals strcat(a2,cp)
+    cout<<"before strcat() the address of a2: "<<&a2<<endl;
+    strcat(a2,cp);
+    cout<<"after strcat() the address of a2: "<<&a2<<endl;
+    cout<<"after strcat()"<<strlen(a2)<<endl;
+    strncat(a2,cp,2);
+    cout<<"cat 2 elements in cp into a2: "<<a2<<endl;
+    strcpy(a3,"edony");
+    cout<<"copy new string into a3 with strcpy(): "<<a3<<endl;
+    /*******dynamic array******/
+    char* in=new char[10];
+    cin>>in;
+    cout<<"Your input c-style string: "<<in<<endl;
+    //delete in;//oops!!!maybe memory leakage
+    delete []in;//remind that we are to free the array object not a single object
+    /*******multidimensional array******/
+    //array with its element is array
+    int ia[2][2]={
+                  {1,2},
+                  {3,4}
+                 };
+    //typedef for multi-dim array
+    typedef int int_array[2];
+    int_array *pia = ia;
+    for(int i=0;i<2;i++)
+        for(int j=0;j<2;j++)
+        {
+            cout<<(*(pia+i))[j]<<" ";
+            if(j%2!=0)cout<<endl;
+        }
+}
+void expression()
+{}
 int main(int argc,char*argv[])
 {
     //test the note function
@@ -127,5 +294,7 @@ int main(int argc,char*argv[])
     double b;int e;
     std::cin>>b>>e;
     std::cout<<power(b,e)<<std::endl;
+    StdLib();
+    PointArray();
 
 }
