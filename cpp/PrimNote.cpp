@@ -30,6 +30,8 @@
 #include <vector>
 #include <bitset>
 #include <cstring> //c-style string standard library
+#include <cstdio>
+#include <cassert>
 
 using std::cout;
 using std::cin;
@@ -222,7 +224,7 @@ void PointArray()
     const int c_ival = 0;
     int* pi;
     //pi = c_ival;//legal but call segmentation fault
-    pi=NULL;
+    pi=0;//or pi=NULL
     cout<<" : "<<pi<<endl;
     // const object pointer
     double pd = 3.14;
@@ -281,8 +283,143 @@ void PointArray()
             if(j%2!=0)cout<<endl;
         }
 }
-void expression()
-{}
+void Expression()
+{
+    //expression in c++ consist of operator symbol and operator object
+    //bitwise operation
+    unsigned int bit = 1;
+    bit<<2;
+    bit>>2;//right shift need the operator object bit is non-negative number and the digits in bit must larger than left operator object
+    cout<<bit<<endl;
+    int b1 = 013;
+    int b2 = 023;
+    cout<<"XOR: "<<(b1^b2)<<endl;
+    cout<<"AND: "<<(b1&b2)<<endl;
+    cout<<"OR: "<<(b1|b2)<<endl;
+    /******* bitset & bitwise operation******/
+    bitset<32> bitset_quizl;
+    unsigned long int_quizl = 0;
+    bitset_quizl.set(27);
+    int_quizl |= 1UL<<27;
+    bitset_quizl.reset(27);
+    int_quizl &= ~(1UL<<27);
+    //assignment operator has a lower precedence
+    int itest=0;
+    while((itest=1)==0)
+    {cout<<"enter the loops!\n";}
+    cout<<"itest: "<<itest<<endl;
+    int arr[2]={2,4};
+    int* pprecedence=arr;
+    cout<<*pprecedence++<<endl;
+    cout<<*pprecedence<<endl;
+    //dangling pointer
+    int *pi = new int();
+    *pi = 3;
+    delete pi;
+    //now pi is a dangling pointer,best way to do is set the pi NULL
+    pi=NULL;
+    //type cast
+    //... dynamic_cast(later)
+    //... const_cast
+    const char* pc_str="edony";
+    char t[3]="cc";
+    char* p_str=t;//=const_cast<char*>(pc_str);
+    cout<<pc_str<<endl;
+    cout<<p_str<<endl;
+    //... statci_cast
+    double dn = 3.14;
+    int r = 3;
+    cout<<"area: "<<r*static_cast<int>(dn)<<endl;
+    int cn = static_cast<char>('a');
+    switch(cn)
+    {
+        case'a':
+            cn++;//oops! missing break;
+        case'c':
+            cn++;//executed
+        case'e':
+            cn++;//executed again
+        case'd':
+            cn++;//executed again
+    }
+    //case true:
+    // error: declaration precedes a case label
+    // string file_name = get_file_name();
+    // break;
+    //case false:
+    // ...
+    switch(static_cast<bool>(cn))
+    {
+        case true:
+        {
+            const char* filename="dp.txt";
+            printf("file name %s\n",filename);
+            //do something
+        }
+        break;
+        case false:
+            cout<<"end of define a new variable in case\n";
+    }
+    cout<<"cn: "<<static_cast<char>(cn)<<endl;
+    //exception
+    string word;
+    if(cin>>word)
+    {
+        std::cerr<<"Error: "<<__FILE__
+                 <<":line "<<__LINE__<<endl
+                 <<"    Compiled on "<<__DATE__
+                 <<" at "<<__TIME__<<endl
+                 <<"    Word read was "<<word
+                 <<":Length too short"<<endl;
+    }
+    assert(word.size()>3);//head file <cassert>
+}
+void reset(int*p)
+{
+    *p = 122;
+    p=0;
+}
+void printval(const int* beg,const int* end)
+{
+    while(beg!=end)
+    {cout<<*beg++<<endl;}
+}
+char whilereturn(const string &str1);//function prototype and mostly in head files
+int ff(int i2,int i=4,int i3=5);//default parameter
+void func()
+{
+    int num=12;
+    reset(&num);
+    cout<<num<<endl;
+    int a[3] = {13,3,4};
+    printval(a,&a[2]);
+    //function can not nest definition
+    //
+    string ss = "edonta";
+    string ss2 = "ooq";
+    char tmp = whilereturn(ss2);
+    cout<<tmp<<endl;//nothing to cout if there is no return after while loops and the compile cannot detect it
+    cout<<whilereturn(ss)<<endl;
+    cout<<"ff: default parameter "<<ff(12)<<endl;
+    cout<<"ff(10) "<<ff(12,10)<<endl;
+
+}
+int ff(int i2,int i,int i3)
+{
+    return (i3+i)*(i2+i);
+}
+char whilereturn(const string &str1)
+{
+    size_t len=str1.size();
+    while(len)
+    {
+        if(str1[len--]=='a')
+            return str1[len+1];
+        else
+            continue;
+    }
+    //error: control might flow off the end of the function without return
+}
 int main(int argc,char*argv[])
 {
     //test the note function
@@ -296,5 +433,7 @@ int main(int argc,char*argv[])
     std::cout<<power(b,e)<<std::endl;
     StdLib();
     PointArray();
+    Expression();
+    func();
 
 }
