@@ -32,6 +32,9 @@
 #include <cstring> //c-style string standard library
 #include <cstdio>
 #include <cassert>
+#include <list>
+#include <deque>
+#include <stack>
 
 using std::cout;
 using std::cin;
@@ -39,6 +42,8 @@ using std::endl;
 using std::string;
 using std::vector;
 using std::bitset;
+using std::list;
+using std::deque;
 
 void out()
 {
@@ -419,6 +424,92 @@ char whilereturn(const string &str1)
             continue;
     }
     //error: control might flow off the end of the function without return
+}
+void inlinefun()
+{
+    //inline function can help to accelerate the execution
+    //accturally, replace the inline function calling with the equlity expression
+    //inline function is initialized and defined in head files
+}
+void classmemfunc()
+{
+    //public&private&protected(member function can access private data member)
+    //default constructor needed to initialize members of built-in type
+    //constructor can be initialzed with initialize list
+    //overload function depends on function signature(prameter's number and type)
+    //
+    //int lookup(string tr);
+    //int lookup(const string str);
+    //these two functions are redefinition not overload
+    //
+    //int lookupa(string &str);
+    //int lookupa(const string &str);
+    //reference or pointer formula parameter are overload
+    //int lookupb(string *str);
+    //int lookupb(string *const str);
+    //not overload
+    //
+    //int (*ff(int))(int*,int);
+    //ff is a function takes a int parameter and return a pointer to a funtion(int(*)(int*,int))
+}
+void iolib()
+{
+    //IO standard library
+    //#include <istream>//in stream
+    //#include <ostream>//out stream
+    //#include <iostream>//derive from istream and ostream
+    //#include <fstream>//derive from iostream
+                        //ifstream derive from istream
+                        //ofstream derive from ostream
+    //#include <sstream>//istringstream read from string object, derive from istream
+                        //ostringstream write into string object,derive from ostream
+                        //stringstream write and read with string object,derive from iostream
+}
+void containerandalg()
+{
+    /*******sequential container******/
+    //vector, list, deque
+    vector<string> svec;
+    svec.push_back(string("edony"));
+    svec.push_back(string("murphy"));
+    vector<string> svec1(svec);
+    vector<string>::iterator mid=svec1.begin()+svec1.size()/2;
+    vector<string> svec2(svec1.begin(),mid);
+    char *words[] = {"stately", "plump", "buck", "mulligan"};
+    // calculate how many elements in words
+    size_t words_size = sizeof(words)/sizeof(char *);
+    // use entire array to initialize words2
+    list<string> words2(words, words + words_size);
+    list<int> ilist;
+    deque<string> items;
+    vector<int> v;
+    v.push_back(12);
+    v.push_back(32);
+    v.push_back(34);
+    vector<int>::iterator first = v.begin(),
+        last = v.end(); // cache end iterator
+    // diaster: behavior of this loop is undefined
+    //while (first != last)
+    //{
+     // do some processing
+     // insert new value and reassign first, which otherwise would be invalid
+     //first = v.insert(first, 42);
+     //++first; // advance first just past the element we added
+    //}
+    //correct loops
+    while (first != v.end())
+    {
+     // do some processing
+     // insert new value and reassign first, which otherwise would be invalid
+     first = v.insert(first, 42);
+     ++first; // advance first just past the element we added
+    }
+    /*******select container******/
+    //list can better insert and delete element
+    //vector deque can better access any element
+    /*******container adaptor******/
+    //#include <stack>
+    //#include <queue>
 }
 int main(int argc,char*argv[])
 {
