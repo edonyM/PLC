@@ -35,6 +35,9 @@
 #include <list>
 #include <deque>
 #include <stack>
+#include <utility>
+#include <map>
+#include <set>
 
 using std::cout;
 using std::cin;
@@ -44,6 +47,10 @@ using std::vector;
 using std::bitset;
 using std::list;
 using std::deque;
+using std::stack;
+using std::pair;
+using std::map;
+using std::set;
 
 void out()
 {
@@ -478,6 +485,7 @@ void containerandalg()
     char *words[] = {"stately", "plump", "buck", "mulligan"};
     // calculate how many elements in words
     size_t words_size = sizeof(words)/sizeof(char *);
+    cout<<"word size: "<<words_size<<endl;
     // use entire array to initialize words2
     list<string> words2(words, words + words_size);
     list<int> ilist;
@@ -486,6 +494,9 @@ void containerandalg()
     v.push_back(12);
     v.push_back(32);
     v.push_back(34);
+    cout<<"v size: "<<v.size()<<endl;
+    cout<<"v begin: "<<*v.begin()<<endl;
+    cout<<"v end: "<<*v.end()<<endl;
     vector<int>::iterator first = v.begin(),
         last = v.end(); // cache end iterator
     // diaster: behavior of this loop is undefined
@@ -497,19 +508,67 @@ void containerandalg()
      //++first; // advance first just past the element we added
     //}
     //correct loops
-    while (first != v.end())
-    {
+    //while (first != v.end())
+    //{
      // do some processing
      // insert new value and reassign first, which otherwise would be invalid
-     first = v.insert(first, 42);
-     ++first; // advance first just past the element we added
-    }
+     //first = v.insert(first, 42);
+     //cout<<"insert item"<<*first<<endl;
+     //++first; // advance first just past the element we added
+    //}
+    /*******shared container in string******/
+    //get details in file ./str.cpp
+
     /*******select container******/
     //list can better insert and delete element
     //vector deque can better access any element
+
     /*******container adaptor******/
     //#include <stack>
     //#include <queue>
+    deque<int> deq;
+    stack<int> stk(deq);
+    cout<<"stack is empty: "<<stk.empty()<<endl;
+    stk.push(1);
+    stk.push(2);
+    stk.push(3);
+    stk.push(4);
+    cout<<"size of stack: "<<stk.size()<<endl;
+    cout<<"top of stack: "<<stk.top()<<endl;
+    stk.pop();
+    cout<<"pop stack: "<<stk.top()<<endl;
+
+    /*******associative container******/
+    //type pair----#include <utility>
+    pair<string,string> anon;
+    pair<string,int> word_count;
+    pair<string,string> author("edony","cc");
+    cout<<"pair first mem: "<<author.first<<endl;
+    cout<<"pair second mem: "<<author.second<<endl;
+    string astr("murphy");
+    int age = 23;
+    word_count = make_pair(astr,age);
+    cout<<"makr_pair pair first mem: "<<word_count.first<<endl;
+    cout<<"makr_pair pair second mem: "<<word_count.second<<endl;
+    //associative container: map----#include <map> using std::map;
+    map<string,int> wco;
+    wco["edony"] = 23;
+    wco["cc"] = 24;//key is const variabel that can not be changed 
+    map<string,int>::iterator map_it = wco.begin();
+    cout<<"first map member: "<< map_it->first <<endl;
+    cout<<"second map member: "<< map_it->second <<endl;
+    map<string,int>::key_type kt="longdd";
+    cout<<"key type: "<<kt<<endl;
+    //associative container: set----#include <set> using std::set;
+    vector<int> ivec;
+    for(vector<int>::size_type i=0;i!=10;++i)
+    {
+        ivec.push_back(i);
+        ivec.push_back(i);
+    }
+    set<int> iset(ivec.begin(),ivec.end());
+    cout<<"vector size: "<<ivec.size()<<endl;
+    cout<<"set size: "<<iset.size()<<endl;
 }
 int main(int argc,char*argv[])
 {
@@ -526,5 +585,5 @@ int main(int argc,char*argv[])
     PointArray();
     Expression();
     func();
-
+    containerandalg();
 }
