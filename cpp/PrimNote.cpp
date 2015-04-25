@@ -38,6 +38,7 @@
 #include <utility>
 #include <map>
 #include <set>
+#include <algorithm>
 
 using std::cout;
 using std::cin;
@@ -569,7 +570,51 @@ void containerandalg()
     set<int> iset(ivec.begin(),ivec.end());
     cout<<"vector size: "<<ivec.size()<<endl;
     cout<<"set size: "<<iset.size()<<endl;
+    int iarr[]={12,3,4,53,2,4,1,1,-1};
+    vector<int> stvec;
+    for(int i=0;i<9;i++)
+    {
+        stvec.push_back(iarr[i]);
+    }
+    sort(stvec.begin(),stvec.end());//algorithm head files
+    for(vector<int>::size_type j=0;j!=stvec.size();j++)
+    {cout<<j<<"th vector: "<<stvec[j]<<endl;}
+    vector<int>::iterator enduniq = unique(stvec.begin(),stvec.end());
+    int ju = 1;
+    for(vector<int>::iterator iter=stvec.begin();iter!=enduniq;++iter)
+    {
+        cout<<ju<<"th unique vector: "<<*iter<<endl;
+        ++ju;
+    }
 }
+//classdetail()
+    //class definition end with ';'
+    class constref
+    {
+        public:
+            constref();//default constructor can not initialize reference and const
+            constref(int ii):i(ii),ci(ii),ri(i){};//list initialization
+            explicit constref(double j):i(j),ci(j),ri(i){};//explicit only on class declaration(head file)
+                                                   //explicit avoid implicit convertion
+            static double returnrate(){return rate;};
+            void dosomethin(int para = crate);//static can ben default real parameter
+
+        private:
+            int i;
+            const int ci;//const varibale can not be assigned
+            int &ri;//reference has to initialize when create
+            static double rate;
+            const static int crate = 0;
+            static double initstatic(){return 1.0;};//static member initialize function
+            static constred mem1;//ok
+            constref *mem2;//ok
+            constref &mem3;//ok
+            //constref mem4;//error
+    };
+    //double constref::rate = 0.0;//direct initialize static member
+    double constref::rate = constref::initstatic();
+    //friend in class...
+    //class static member replace of global variables for all class object access
 int main(int argc,char*argv[])
 {
     //test the note function
@@ -586,4 +631,7 @@ int main(int argc,char*argv[])
     Expression();
     func();
     containerandalg();
+    constref cr(12);
+    cout<<"static rate: "<<cr.returnrate()<<endl;
+    //double outerclassstatic = constref::initstatic();
 }
