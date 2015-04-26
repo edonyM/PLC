@@ -589,6 +589,14 @@ void containerandalg()
 }
 //classdetail()
     //class definition end with ';'
+    class U_ptr//smart pointer for shared object pointed by some pointers
+    {
+        friend class constref;
+        int *ip;
+        size_t use_count;
+        U_ptr(int *p):ip(p),use_count(1){};
+        ~U_ptr(){delete ip;}
+    };
     class constref
     {
         public:
@@ -596,8 +604,16 @@ void containerandalg()
             constref(int ii):i(ii),ci(ii),ri(i){};//list initialization
             explicit constref(double j):i(j),ci(j),ri(i){};//explicit only on class declaration(head file)
                                                    //explicit avoid implicit convertion
+            constref(const constref &cp);//copy constructor
+                                         //const formal parameter can not assign into other object
+                                         //for this copy constructor take const reference formal parameter
+            constref& operator=(const constref& ass);//assign operator overload
+                                                     //ass right operator
+                                                     //return *this left operator
+            ~constref(){if(--ptr->use_count==0)delete ptr;};//destructor
             static double returnrate(){return rate;};
             void dosomethin(int para = crate);//static can ben default real parameter
+            std::ostream& operator<<(const constref& cr);
 
         private:
             int i;
@@ -606,15 +622,34 @@ void containerandalg()
             static double rate;
             const static int crate = 0;
             static double initstatic(){return 1.0;};//static member initialize function
-            static constred mem1;//ok
-            constref *mem2;//ok
-            constref &mem3;//ok
+            static constref mem1;//ok
+            //constref *mem2;//ok
+            //constref &mem3=*mem2;//ok
             //constref mem4;//error
+            U_ptr *ptr;
     };
     //double constref::rate = 0.0;//direct initialize static member
     double constref::rate = constref::initstatic();
     //friend in class...
     //class static member replace of global variables for all class object access
+    //
+//operator overload
+//be care of few use operator overload
+//
+//OOP: data abstract; inheritance; dynamic binding(virtual)
+//data abstract:
+//......public: class member and class friend and outer the class declare and derived subclass
+//......protected: class member and class friend and derived subclass 
+//......private: class member and class friend
+//inheritance:
+//......
+    class inh:public constref
+    {
+        //...
+    };
+//dynamic binding(virtual)
+//......option 1: virtual member function
+//......option 2: call the funtion with the reference of base class or pointer to base class
 int main(int argc,char*argv[])
 {
     //test the note function
