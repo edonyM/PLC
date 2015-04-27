@@ -594,6 +594,7 @@ void containerandalg()
         friend class constref;
         int *ip;
         size_t use_count;
+        U_ptr():ip(new int),use_count(1){};
         U_ptr(int *p):ip(p),use_count(1){};
         ~U_ptr(){delete ip;}
     };
@@ -601,8 +602,14 @@ void containerandalg()
     {
         public:
             constref();//default constructor can not initialize reference and const
-            constref(int ii):i(ii),ci(ii),ri(i){};//list initialization
-            explicit constref(double j):i(j),ci(j),ri(i){};//explicit only on class declaration(head file)
+            constref(int ii):i(ii),ci(ii),ri(i)
+            {
+                ptr = new U_ptr;
+            };//list initialization
+            explicit constref(double j):i(j),ci(j),ri(i)
+            {
+                ptr = new U_ptr;
+            };//explicit only on class declaration(head file)
                                                    //explicit avoid implicit convertion
             constref(const constref &cp);//copy constructor
                                          //const formal parameter can not assign into other object
@@ -643,13 +650,63 @@ void containerandalg()
 //......private: class member and class friend
 //inheritance:
 //......
-    class inh:public constref
-    {
+    //class inh:public constref
+    //{
         //...
-    };
+    //};
 //dynamic binding(virtual)
 //......option 1: virtual member function
-//......option 2: call the funtion with the reference of base class or pointer to base class
+//......option 2: call the function with the reference of base class or pointer to base class
+//
+//details in file './virinclass.cpp'
+//abstract virtual class: only used as a base class to derive from and can not create object of this class
+//......class vc
+//......{
+//......    void interface() const =0;//pure virtual function
+//......};
+//
+//handle class: manage and store base class pointer(pointer to a dynamic object)
+//details in file './handleclass.cpp'
+//
+//generic programming(template)
+template <typename T>
+int compare(const T &v1, const T &v2)
+{
+    if(v1<v2)return -1;
+    if(v1>v2)return 1;
+    return 0;
+}
+// ok: inline specifier follows template parameter list
+// template <typename T> inline T min(const T&, const T&);
+// // error: incorrect placement of inline specifier
+// inline template <typename T> T min(const T&, const T&);
+//template class
+template <class T> class Queue
+{
+    public:
+        Queue();
+        T &front();
+        const T &front()const;
+        void push(const T&);
+        void pop();
+        bool empty() const;
+    private:
+        //...
+};
+//non-type template formula parameter
+template <typename T, size_t N> void array_init(T (&parm)[N])
+{
+    for(size_t i=0;i !=N; ++i)
+        parm[i] = 0;
+}
+//generic programming with template needs to be reviewed agian
+//
+//exception class
+//......
+//
+//memory arangement
+//......
+//
 int main(int argc,char*argv[])
 {
     //test the note function
@@ -669,4 +726,16 @@ int main(int argc,char*argv[])
     constref cr(12);
     cout<<"static rate: "<<cr.returnrate()<<endl;
     //double outerclassstatic = constref::initstatic();
+    double t1=12.3;
+    double t2=12.11;
+    cout<<"tmplate compared double: "<<compare(t1,t2)<<endl;
+    string tstr1="cc";
+    string tstr2="edony";
+    cout<<"tmplate compared string: "<<compare(tstr1,tstr2)<<endl;
+    int x[42];
+    double y[10];
+    array_init(x);
+    array_init(y);
+    cout<<"32th x element: "<<x[31]<<endl;
+    cout<<"9th y element: "<<y[8]<<endl;
 }
