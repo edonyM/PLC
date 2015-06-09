@@ -15,32 +15,31 @@
  #
  # twitter : @edonyzpc
  #
- # Last modified: 2015-06-03 22:21
+ # Last modified: 2015-06-09 22:15
  #
- # Filename: hanoi.c
+ # Filename: linecount.c
  #
  # Description: All Rights Are Reserved
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-// solve for Tower of Hanoi Problem
-#include <stdlib.h>
 #include <stdio.h>
 
-void hanoi(int n, char A, char B, char C) {
-    if (n == 1) {
-        printf("%c --> %c\n", A, C);
+int main(int argc, char *argv[]) {
+    if (argc == 2) {
+        int counter = 0;
+        FILE *fp = NULL;
+        char ch;
+        fp = fopen(argv[1], "rb");
+        if (fp == NULL) {
+            printf("Can not open file %s", argv[1]);
+            return 1;
+        }
+        while ((ch=fgetc(fp)) != EOF) {
+            if (ch == '\n' || ch == '\r') {
+                ++counter;
+            }
+        }
+        fclose(fp);
+        fp = NULL;
+        printf("Total Line: %d \n", counter);
     }
-    else {
-        hanoi(n-1, A, C, B);
-        hanoi(1, A, B, C);
-        hanoi(n-1, B, A, C);
-    }
-}
-
-int main() {
-    int n;
-    char A = 'A';
-    char B = 'B';
-    char C = 'C';
-    scanf("%i", &n);
-    hanoi(n, A, B, C);
 }
