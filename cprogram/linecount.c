@@ -37,9 +37,18 @@ int main(int argc, char *argv[]) {
         while ((ch=fgetc(fp)) != EOF) {
             //printf("%c", ch);
             ++byte_counter;
-            if (ch == '\n' || ch == '\r') {
-                ++counter;
-            }
+            //if (ch == '\n' || ch == '\r') {
+            //    ++counter;
+            //}
+        }
+        rewind(fp);
+        //fseek(fp, 0, SEEK_SET);
+        //freopen(argv[1], "rb", fp);
+        while (!feof(fp)) {
+            char str[256];
+            fgets(str, 256, fp);
+            printf("%s", str);
+            ++counter;
         }
         fclose(fp);
         fp = NULL;
