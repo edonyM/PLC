@@ -34,6 +34,7 @@ int main(int argc, char *argv[]) {
             return 1;
         }
         while ((ch=fgetc(fp)) != EOF) {
+            //printf("%c", ch);
             if (ch == '\n' || ch == '\r') {
                 ++counter;
             }
