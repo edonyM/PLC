@@ -26,6 +26,7 @@
 int main(int argc, char *argv[]) {
     if (argc == 2) {
         int counter = 0;
+        int byte_counter = 0;
         FILE *fp = NULL;
         char ch;
         fp = fopen(argv[1], "rb");
@@ -35,12 +36,13 @@ int main(int argc, char *argv[]) {
         }
         while ((ch=fgetc(fp)) != EOF) {
             //printf("%c", ch);
+            ++byte_counter;
             if (ch == '\n' || ch == '\r') {
                 ++counter;
             }
         }
         fclose(fp);
         fp = NULL;
-        printf("Total Line: %d \n", counter);
+        printf("Total Line: %d \nTotal Size: %d Bytes\n", counter, byte_counter);
     }
 }
