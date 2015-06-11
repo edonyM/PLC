@@ -2,7 +2,7 @@
 
 File stream in c++
 
-    ![](https://github.com/edonyM/PLC/blob/master/cprogram/pic/streamincpp.png)
+![](https://github.com/edonyM/PLC/blob/master/cprogram/pic/streamincpp.png)
 
     ```c
     #include <fstream>
