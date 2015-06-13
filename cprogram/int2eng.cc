@@ -73,7 +73,7 @@ string int2str(int num) {
 vector<string> SliceNum(string str) {
     vector<string> str_list;
     int last_pos = str.length() % 3;
-    str_list.push_back(str.substr(0, last_pos));
+    if (last_pos)str_list.push_back(str.substr(0, last_pos));
     for (int i=last_pos; i < str.length(); i=i+3) {
         str_list.push_back(str.substr(i,3));
     }
@@ -120,7 +120,7 @@ int main() {
     cout << vec_str.size()<<endl;
     string results;
     for (size_t i=0; i< vec_str.size(); ++i) {
-        results = results + Num2Eng(vec_str[i]) + " " + engcount[vec_str.size()-1-i] + " ";
+        results = results + Num2Eng(vec_str[i]) + engcount[vec_str.size()-1-i] + " ";
     }
     cout <<results <<endl;
 }
