@@ -3,6 +3,7 @@
 
 using namespace std;
 
+//int i=0;
 int count_asterisks(char *str)
 {
 	int asterisk_count = 0;
@@ -51,12 +52,16 @@ bool match_at_front(char * search_in, char * search_for)
 		return false;
 	}
 }
-	
+
 bool match_within(char * search_in, char * search_for)
 {
 	for(int x=0; 
 	    x<=strlen(search_in)-strlen(search_for)-count_asterisks(search_for); x++)
 	{
+        //i++;
+        //cout << "counter: " << i << endl;
+        //cout << search_in+x << endl;
+        //cout << search_for << endl;
 		if(match_at_front(search_in+x, search_for))
 		{
 			return true;
@@ -71,14 +76,14 @@ int main(int argc, char* argv[])
 		cout<<"Input should be of the form substring str1 str2";
 		return 0;
 	}
-        if(match_within(argv[1], argv[2]))
-        {
-                cout<<"String "<<argv[2];
-                cout<<" is contained within "<<argv[1]<<".";
-        }
-        else
-        {
-                cout<<"String "<<argv[2]<<" is not contained within ";
-                cout<<argv[1]<<".";
-        }
+    if(match_within(argv[1], argv[2]))
+    {
+        cout<<"String "<<argv[2];
+        cout<<" is contained within "<<argv[1]<<".";
+    }
+    else
+    {
+        cout<<"String "<<argv[2]<<" is not contained within ";
+        cout<<argv[1]<<".";
+    }
 }
