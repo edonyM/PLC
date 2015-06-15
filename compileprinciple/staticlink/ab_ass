@@ -1,0 +1,49 @@
+
+ab:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+00000000004000e8 <main>:
+  4000e8:	55                   	push   %rbp
+  4000e9:	48 89 e5             	mov    %rsp,%rbp
+  4000ec:	48 83 ec 10          	sub    $0x10,%rsp
+  4000f0:	c7 45 fc 64 00 00 00 	movl   $0x64,-0x4(%rbp)
+  4000f7:	48 8d 45 fc          	lea    -0x4(%rbp),%rax
+  4000fb:	be 00 10 60 00       	mov    $0x601000,%esi
+  400100:	48 89 c7             	mov    %rax,%rdi
+  400103:	b8 00 00 00 00       	mov    $0x0,%eax
+  400108:	e8 07 00 00 00       	callq  400114 <swap>
+  40010d:	b8 00 00 00 00       	mov    $0x0,%eax
+  400112:	c9                   	leaveq 
+  400113:	c3                   	retq   
+
+0000000000400114 <swap>:
+  400114:	55                   	push   %rbp
+  400115:	48 89 e5             	mov    %rsp,%rbp
+  400118:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+  40011c:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)
+  400120:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+  400124:	8b 10                	mov    (%rax),%edx
+  400126:	48 8b 45 f0          	mov    -0x10(%rbp),%rax
+  40012a:	8b 00                	mov    (%rax),%eax
+  40012c:	31 c2                	xor    %eax,%edx
+  40012e:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+  400132:	89 10                	mov    %edx,(%rax)
+  400134:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+  400138:	8b 10                	mov    (%rax),%edx
+  40013a:	48 8b 45 f0          	mov    -0x10(%rbp),%rax
+  40013e:	8b 00                	mov    (%rax),%eax
+  400140:	31 c2                	xor    %eax,%edx
+  400142:	48 8b 45 f0          	mov    -0x10(%rbp),%rax
+  400146:	89 10                	mov    %edx,(%rax)
+  400148:	48 8b 45 f0          	mov    -0x10(%rbp),%rax
+  40014c:	8b 10                	mov    (%rax),%edx
+  40014e:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+  400152:	8b 00                	mov    (%rax),%eax
+  400154:	31 c2                	xor    %eax,%edx
+  400156:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+  40015a:	89 10                	mov    %edx,(%rax)
+  40015c:	90                   	nop
+  40015d:	5d                   	pop    %rbp
+  40015e:	c3                   	retq   
