@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cassert>
-//#include <cstring>
+#include <cstring>
 
 using std::cout;
 using std::cin;
@@ -34,11 +34,11 @@ void push(list *ls, node *n) {
         ls->size++;
     }
     else {
-        cout << ls->size << endl;
+        //cout << ls->size << endl;
         ls->tail->next = n;
         ls->tail = n;
         ls->tail->next = NULL;
-        cout << ls->tail << endl;
+        //cout << ls->tail << endl;
         ls->size++;
     }
 }
@@ -56,21 +56,21 @@ node *pop(list *ls) {
     ls->tail = tail_new;
     ls->tail->next = NULL;
     ls->size--;
-    cout << tmp << " pop item\n";
+    //cout << tmp << " pop item\n";
     return tmp;
 }
 
 list *reverse(list *ls) {
-    list *re_ls = new list;
+    list *re_ls = CreateList();
     node *tmp = NULL;
     int size = ls->size;
     while (size > 0) {
         tmp = pop(ls);
-        node *tt = ls->head;
-        for (int i=0; i<ls->size;i++) {
-            cout << tt->next << endl;
-            tt = tt->next;
-        }
+//        node *tt = ls->head;
+//        for (int i=0; i<ls->size;i++) {
+//            cout << tt->next << endl;
+//            tt = tt->next;
+//        }
         push(re_ls, tmp);
         size--;
     }
@@ -79,18 +79,24 @@ list *reverse(list *ls) {
 
 int main() {
     list *ls;
-    char tmp[3][10] = {"edony", "cc", "murphy"};
+    char tmp[4][10] = {"edony", "cc", "murphy", "kangro"};
     ls = CreateList();
-    for (int i=0; i < 3; ++i) {
+    for (int i=0; i < 4; ++i) {
         node *n = new node;
         n->num = i;
         strcpy(n->a,tmp[i]);
         n->next = NULL;
         push(ls, n);
     }
-    node *tt = ls->head;
-    for (int i=0; i<3;i++) {
-        cout << tt->next << endl;
+//    node *tt = ls->head;
+//    for (int i=0; i<3;i++) {
+//        cout << tt->next << endl;
+//        tt = tt->next;
+//    }
+    cout << "Origin: " << endl;
+    node *tt = ls->head->next;
+    for (int i=0; i<4; ++i) {
+        cout << tt->num << " " << tt->a << endl;
         tt = tt->next;
     }
     int size = ls->size;
@@ -98,7 +104,7 @@ int main() {
     list *re_ls = NULL;
     re_ls = reverse(ls);
     node *t_node = re_ls->head->next;
-    for (int i=1; i<3; ++i) {
+    for (int i=0; i<4; ++i) {
         cout << t_node->num << " " << t_node->a << endl;
         t_node = t_node->next;
     }
