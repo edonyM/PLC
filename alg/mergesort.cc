@@ -59,35 +59,27 @@ void mergesortrecur(int list[], int sorted[], int start, int end) {
 }
 
 void mergersortinter(int list[], int sorted[], int start, int end) {
-    for (int i=1; i < end+1; i *=2) {
-        if (i > end) i = end;
-        int left_start = start;
-        int left_end = left_start + i - 1;
-        int right_start = left_start + i;
-        int right_end = right_start + i - 1;
-        for (; right_end <= end; right_end=right_end+2*i) {
-            if (right_end > end) right_end = end;
-            int end_r_s = right_end;
-            int start_r = right_end + 1 - i;
-            int start_l = start_r - i;
-            int end_s = start_l + i -1;
-            cout << list[start_l] << "L" << list[end_s] << endl;
-            cout << list[start_r] << "R" << list[end_r_s] << endl;
-            int new_start = start;
-            while (start_l <= end_s && start_r <= end_r_s) {
-                if (list[start_l] < list[start_r]) sorted[new_start++] = list[start_l++];
-                else sorted[new_start++] = list[start_r++];
+    for (int i=1; i <= end; i *=2) {
+        for (int right = start + i; right+i-1 <= end; right=right+2*i) {
+            int right_tmp = right;
+            int end_r = right + i - 1;
+            int middle = right - 1;
+            int left = right - i;
+            int counter = left;
+            //cout << left << "," << middle << "," << right << "," << end_r << endl;
+            while (left <= middle && right_tmp <= end_r) {
+                if (list[left] < list[right_tmp]) sorted[counter++] = list[left++];
+                else sorted[counter++] = list[right_tmp++];
             }
-            while (start_l <= end_s) {
-                sorted[new_start++] = list[start_l++];
+            while (left <= middle) {
+                sorted[counter++] = list[left++];
             }
-            while (start_r <= end_r_s) {
-                sorted[new_start++] = list[start_r++];
+            while (right_tmp <= end_r) {
+                sorted[counter++] = list[right_tmp++];
             }
-            //while (new_start >= 0) {
-            //    list[start_r--] = sorted[new_start--];
-            //}
-            for (int j=right_end+1-i-i; j <= right_end; ++j) {list[j] = sorted[j];}
+            for (int j=right-i; j <= end_r; ++j) {
+                list[j] = sorted[j];
+            }
         }
     }
 }
