@@ -28,17 +28,23 @@ using std::cin;
 using std::endl;
 
 void Swap(int *a, int *b) {
-    *b ^= *a ^= *b ^= *a;
+    //*b ^= *a ^= *b ^= *a;
+    int tmp = 0;
+    tmp = *a;
+    *a = *b;
+    *b = tmp;
 }
 
 void BubbleSort(int list[], int len) {
-    int flag = 0;
-    for (int j=len; j > 0; --j){
-        for (int i=0; i < len; ++i) {
+    for (int i=0; i < len; ++i) cout << list[i] << " ";
+    cout << endl;
+    for (int j=len; j >= 0; --j){
+        int flag = 0;
+        for (int i=0; i < j; ++i) {
             if (list[i] > list[i + 1]) Swap(list+i, list+i+1);
             else flag++;
         }
-        if (flag == len) break;
+        if (flag == len) {cout<<flag<<endl;break;}
     }
 }
 
@@ -54,4 +60,9 @@ int main() {
     int a[5] = {2, 13, 4, 55,-1};
     BubbleSort(a, 5);
     for (int i=0; i < 5; ++i) cout << a[i] << " ";
+    cout << endl;
+    int a1[8] = {1, 2, 3, 4, 5, 6, 7, 8};
+    BubbleSort(a1, 8);
+    for (int i=0; i < 8; ++i) cout << a1[i] << " ";
+    cout << endl;
 }
