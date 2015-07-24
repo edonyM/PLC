@@ -142,6 +142,71 @@ int ListHashSearch(int a[], int len, int search) {
     }
     return -1;
 }
+
+typedef struct BSTNode_ {
+    int a;
+    BSTNode_ *left;
+    BSTNode_ *right;
+}BSTNode;
+
+typedef struct BST_ {
+    int size;
+    BSTNode *root;
+}BST;
+
+void BSTInit(BST *t) {
+    t->size = 0;
+    t->root = NULL;
+}
+void BSTIns(BST *t, BSTNode *ins, int ele) {
+    BSTNode *n;
+    n = t->root;
+    if (!n) {
+        t->root = ins;
+        t->size++;
+        return;
+    }
+    while (n) {
+        if (ele < n->a) {
+            if (n->left) n = n->left;
+            else {n->left = ins;break;}
+        }
+        else {
+            if (n->right) n = n->right;
+            else {n->right = ins;break;}
+        }
+    }
+    t->size++;
+}
+BSTNode *BSTSearch(int a[], int len, int search) {
+    BST *b = new BST;
+    b->size = 0;
+    b->root = NULL;
+    for (int i=0; i < len; ++i) {
+        BSTNode *in = new BSTNode;
+        in->a = a[i];
+        in->left = NULL;
+        in->right = NULL;
+        BSTIns(b, in, a[i]);
+    }
+    BSTNode *tmp;
+    tmp = b->root;
+    while (tmp) {
+        if (tmp->a < search) {
+            cout << "Right\n";
+            tmp = tmp->right;
+        }
+        if (tmp->a > search) {
+            cout << "Left\n";
+            tmp = tmp->left;
+        }
+        if (tmp->a == search) {
+            cout << "bingo\n";
+            return tmp;
+        }
+    }
+    return NULL;
+}
 int main() {
     int a[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
     int i = BinarySearch(a, 10, 7);
@@ -152,4 +217,9 @@ int main() {
     int c[9] = {12, 3, 11, 6, 8, 10, 37, 15, 17};
     int k = ListHashSearch(c, 9, 37);
     cout << "k:" << k << endl;
+    int d[9] = {12, 3, 11, 6, 8, 10, 37, 15, 17};
+    BSTNode *f;
+    f = BSTSearch(d, 9, 37);
+    cout << "f:" << f << endl;
+    cout << f->a << endl;
 }
