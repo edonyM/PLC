@@ -21,6 +21,9 @@
  #
  # Description: All Rights Are Reserved
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+// TODO(edony): link list tail pointer problem
+
 #include <iostream>
 #include <cstdlib>
 
@@ -151,5 +154,46 @@ void list_print(list *ls) {
     while(tmp) {
         cout << tmp->data << endl;
         tmp = tmp->next;
+    }
+}
+
+void list_reverse(list *ls) {
+    node *head_bak = ls->head;
+    node *old_node = ls->head;
+    node *new_node = ls->head->next;
+    while (new_node) {
+        if (old_node == ls->head) old_node->next = NULL;
+        node *tmp = new_node->next;
+
+        new_node->next = old_node;
+
+        old_node = new_node;
+        new_node = tmp;
+    }
+    ls->head = old_node;
+    ls->tail = head_bak;
+}
+
+node *list_circle(list *ls) {
+    node *fast = ls->head;
+    node *slow = ls->head;
+    while (fast && fast->next) {
+        fast = fast->next->next;
+        slow = slow->next;
+        if (fast == slow) {
+            break;
+        }
+    }
+    if ((fast == NULL) || (fast->next == NULL)) {
+        return NULL;
+    }
+    else {
+        cout << fast->data << " same\n";
+        slow = ls->head;
+        while (slow != fast) {
+            slow = slow->next;
+            fast = fast->next;
+        }
+        return slow;
     }
 }

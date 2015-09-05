@@ -57,6 +57,9 @@ int main() {
     cout << "**** PartII ****\n";
     list_sort(ls);
     list_print(ls);
+    list_reverse(ls);
+    cout << "reversed list\n";
+    list_print(ls);
     list *ls1 = (list *)malloc(sizeof(list));
     node *h = (node *)malloc(sizeof(node));
     h->data = -3;
@@ -67,5 +70,22 @@ int main() {
         list_ins_next(ls1, ls1->tail, i-2);
     }
     list_sort(ls1);
+    cout << "original list\n";
     list_print(ls1);
+    node *circle = ls1->head;
+    for (int i=0; i < 4; ++i) {
+        circle = circle->next;
+    }
+    cout << "circle: " << circle->data << endl;
+    node *tail = ls1->head;
+    node *ttail = NULL;
+    while(tail && tail->next) {
+        cout << tail->data << endl;
+        ttail = tail;
+        tail = tail->next;
+    }
+    cout << "tail " << tail->data << endl;
+    tail->next = circle;
+    node *in = list_circle(ls1);
+    if (in) cout <<  in->data << endl;
 }
