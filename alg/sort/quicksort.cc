@@ -145,4 +145,9 @@ int main() {
     quicksort___(a3, 0, 4);
     for (int i=0; i < 5; ++i) cout << a3[i] << " ";
     cout << endl;
+    int a4[8] = {0, 13, 1, 12, -1, 34, 4 ,17};
+    cout << "quick with left pivot___\n";
+    quicksort___(a4, 0, 7);
+    for (int i=0; i < 8; ++i) cout << a4[i] << " ";
+    cout << endl;
 }
