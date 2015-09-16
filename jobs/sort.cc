@@ -177,6 +177,53 @@ void mergsort_NR(int ls[], int sorted[], int start, int end) {
     }
 }
 
+typedef struct Heap_ {
+    int size;
+    int *data;
+}Heap;
+
+void HeapInit(Heap *maxheap) {
+    maxheap->size = 0;
+    maxheap->data = NULL;
+}
+
+void Swap(int *a, int *b) {
+    *a ^= *b ^= *a ^= *b;
+}
+void HeapInsert(Heap *maxheap, int *data) {
+    int num = maxheap->size + 1;
+    int parent = num/2;
+    int *new_data = new int[num];
+    for (int i=0; i < maxheap->size; ++i) {
+        new_data[i] = maxheap->data[i];
+    }
+    delete [] maxheap->data;
+    maxheap->data = new_data;
+    maxheap->data[maxheap->size] = *data;
+    while ((num > 0) && (parent > 0) && (maxheap->data[num-1] > maxheap->data[parent-1])) {
+        //cout << maxheap->data[num-1] << "*" << maxheap->data[parent-1] << endl;
+        Swap(maxheap->data+num-1, maxheap->data+parent-1);
+        //cout << maxheap->data[num-1] << "^" << maxheap->data[parent-1] << endl;
+        num = parent;
+        parent = num/2;
+    }
+    maxheap->size++;
+}
+void HeapSort(int a[], int len) {
+    int ins_start = len;
+    for (; ins_start > 0; --ins_start) {
+        int tmp = a[ins_start-1];
+        Heap *tmp_heap = new Heap;
+        HeapInit(tmp_heap);
+        for (int i=0; i < ins_start; ++i) {
+            HeapInsert(tmp_heap, a+i);
+        }
+        a[ins_start-1] = tmp_heap->data[0];
+        for (int i=0; i < ins_start; ++i) {
+            if (a[i] == tmp_heap->data[0]) {a[i] = tmp;break;}
+        }
+    }
+}
 int main() {
     int ls[8] = {12, 2, 13, -1, 15, 1, 0, 5};
     int *tmp = new int[8];
@@ -232,6 +279,12 @@ int main() {
     cout << "**selection sort\n";
     int tmp8[7] = {2, -1, 34, 15, 1, 7, 5};
     selectsort(tmp8, 7);
+    for(int i=0; i < 7; ++i) {
+        cout << tmp8[i] << endl;
+    }
+    cout << "**heap sort\n";
+    int tmp9[7] = {2, -1, 34, 15, 1, 7, 5};
+    HeapSort(tmp9, 7);
     for(int i=0; i < 7; ++i) {
         cout << tmp8[i] << endl;
     }
