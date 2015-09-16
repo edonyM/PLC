@@ -33,7 +33,7 @@ void Swap(int *a, int *b) {
 void Merge(int *l, int *n,int start, int middle, int end) {
     int right = middle + 1;
     int left = start;
-    int n_start = start;
+    int n_start = 0;
     while (left <= middle && right <= end) {
         if (l[left] < l[right]) {
             n[n_start++] = l[left++];
@@ -42,11 +42,14 @@ void Merge(int *l, int *n,int start, int middle, int end) {
             n[n_start++] = l[right++];
         }
     }
-    while (left <= middle) {
+    while (left <= middle) { 
         n[n_start++] = l[left++];
     }
-    while (right <= end) {
-        n[n_start] = l[right++];
+    while (right <= end) { 
+        n[n_start++] = l[right++];
+    }
+    for (int ii=0; ii < n_start; ii++) {
+        l[ii+start] = n[ii];
     }
 }
 void mergesortrecur(int list[], int sorted[], int start, int end) {
@@ -96,6 +99,13 @@ int main() {
     mergersortinter(a1, b1, 0, 4);
     for (int i=0; i < 5; ++i) {
         cout << a1[i] << " ";
+    }
+    cout << endl;
+    int a_[10] = {1, 2,13, -1,45, 12, 4, 56, 0, 8};
+    int b_[10];
+    mergesortrecur(a_,b_,0,9);
+    for (int i=0; i < 10; ++i) {
+        cout << b_[i] << " ";
     }
     cout << endl;
 }

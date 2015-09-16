@@ -75,6 +75,15 @@ void bubblesort(int ls[], int size) {
         if (flag == i) break;
     }
 }
+void selectsort(int ls[], int size) {
+    for (int i=0; i < size; i++) {
+        for (int j=i; j < size; ++j) {
+            if (ls[j] < ls[i]) {
+                swap(ls+j, ls+i);
+            }
+        }
+    }
+}
 void insertsort(int ls[], int size) {
     for (int i=1; i < size; i++) {
         int tmp = ls[i];
@@ -104,6 +113,66 @@ void shellsort(int ls[], int size) {
                 else {break;}
             }
             ls[j] = tmp;
+        }
+    }
+}
+void merge(int ls[], int sorted[], int start, int mid, int end) {
+    int counter = 0;
+    int i = start;
+    int j = mid+1;
+    while ((i <= mid) && (j <= end)) {
+        if (ls[i] < ls[j]) {
+            sorted[counter++] = ls[i++];
+        }
+        else {
+            sorted[counter++] = ls[j++];
+        }
+    }
+    while (i <= mid) {
+        sorted[counter++] = ls[i++];
+    }
+    while (j <= end) {
+        sorted[counter++] = ls[j++];
+    }
+    for (int n=0; n < counter; n++) {
+        ls[start+n] = sorted[n];
+    }
+}
+
+void mergesort(int ls[], int sorted[], int start, int end) {
+    int mid = (start+end)/2;
+    if (start < end) {
+        mergesort(ls, sorted, start, mid);
+        mergesort(ls, sorted, mid+1, end);
+        merge(ls, sorted, start, mid, end);
+    }
+}
+
+void mergsort_NR(int ls[], int sorted[], int start, int end) {
+    for (int delta=1; delta <= (end-start+1)/2; delta *= 2) {
+        for (int i=0; i < (end-start+1)/2; i+=2*delta) {
+            int start_l = i;
+            int last = i + 2*delta - 1;
+            int mid = (start_l+last)/2;
+            int start_r = mid + 1;
+            int counter = 0;
+            while (start_l <= mid && start_r <= last) {
+                if (ls[start_l] < ls[start_r]) {
+                    sorted[counter++] = ls[start_l++];
+                }
+                else {
+                    sorted[counter++] = ls[start_r++];
+                }
+            }
+            while (start_l <= mid) {
+                sorted[counter++] = ls[start_l++];
+            }
+            while (start_r <= last) {
+                sorted[counter++] = ls[start_r++];
+            }
+            for (int i=0; i < counter; i++) {
+                ls[i+start_l] = sorted[i];
+            }
         }
     }
 }
@@ -138,6 +207,33 @@ int main() {
     shellsort(tmp4, 10);
     for(int i=0; i < 10; ++i) {
         cout << tmp4[i] << endl;
+    }
+    cout << "**merge\n";
+    int tmp5[10] = {12, 2, 13, -1, 34, 15, 1, 7, 0, 5};
+    int sorted[10];
+    mergesort(tmp5, sorted, 0, 9);
+    for(int i=0; i < 10; ++i) {
+        cout << sorted[i] << endl;
+    }
+    cout << "**merge_NR even\n";
+    int tmp6[10] = {12, 2, 13, -1, 34, 15, 1, 7, 0, 5};
+    int sorted1[10];
+    mergesort(tmp6, sorted1, 0, 9);
+    for(int i=0; i < 10; ++i) {
+        cout << tmp6[i] << endl;
+    }
+    cout << "**merge_NR odd\n";
+    int tmp7[7] = {2, -1, 34, 15, 1, 7, 5};
+    int sorted2[7];
+    mergesort(tmp7, sorted2, 0, 6);
+    for(int i=0; i < 7; ++i) {
+        cout << tmp7[i] << endl;
+    }
+    cout << "**selection sort\n";
+    int tmp8[7] = {2, -1, 34, 15, 1, 7, 5};
+    selectsort(tmp8, 7);
+    for(int i=0; i < 7; ++i) {
+        cout << tmp8[i] << endl;
     }
     //quicksort2(tmp2, 0, 7);
     //for(int i=0; i < 8; ++i) {
