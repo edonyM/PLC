@@ -95,7 +95,28 @@ std::pair<string, int> MaxRepeatSubStr(char *str) {     // 非连续出现次数
     }
     return std::pair<string, int>(result, value);
 }
-std::pair<string, int> MaxSeqSubStr(char *str) {
+
+/* 有点KMP算法的味道*/
+std::pair<string, int> MaxSeqSubStr(char *str) {    //连续出现次数最多的子字符串
+    string max_repeat;
+    if (!str) return std::pair<string, int>(max_repeat,0);
+    set<string> substr = SubStr(str);
+    string key;
+    int value = 0;
+    for(set<string>::iterator iter=substr.begin(); iter != substr.end(); iter++) {
+        string tmp = *iter;
+        size_t len = tmp.size();
+        int counter = 0;
+        for (int i=0; i < strlen(str); ++i) {
+            while (tmp[counter] == str[i]) {
+                counter++;
+            }
+            if(counter == len) {
+                i += counter;
+
+            }
+        }
+    }
 }
 int main() {
     char str[11] = "abcbcbcabc";
