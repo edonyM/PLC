@@ -103,6 +103,7 @@ std::pair<string, int> MaxSeqSubStr(char *str) {    //连续出现次数最多�
     set<string> substr = SubStr(str);
     string key;
     int value = 0;
+    map<string, int> record;
     for(set<string>::iterator iter=substr.begin(); iter != substr.end(); iter++) {
         string tmp = *iter;
         size_t len = tmp.size();
@@ -111,11 +112,19 @@ std::pair<string, int> MaxSeqSubStr(char *str) {    //连续出现次数最多�
             while (tmp[counter] == str[i]) {
                 counter++;
             }
-            if(counter == len) {
-                i += counter;
-
+            if(counter == len) {    // match the sub-string
+                if (record.find(tmp) == record.end()) {
+                    record.insert(std::pair<string, int>(tmp, 1));
+                }
+                else {
+                    record[tmp].second++;
+                }
             }
+            counter = 0;
         }
+    }
+    for (map<string, int>::iterator iter=record.begin(); iter!=record.end(); iter++) {
+        
     }
 }
 int main() {
