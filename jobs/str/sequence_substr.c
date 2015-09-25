@@ -22,6 +22,7 @@
  # Description: All Rights Are Reserved
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 // 求一个字符串中连续出现次数最多的字串
+// class string的实现
 #include <iostream>
 #include <vector>
 #include <set>
