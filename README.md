@@ -17,3 +17,15 @@ Reading note about the fundamentals of compiling(***程序员的自我修养--�
 
 ## pat
 Data Sturcture and Algrithm Practice with [website](http://www.patest.cn/contests/mooc-ds).
+
+## alg
+Impelementation of Basic Algorithm and Basic Data Structure.
+> sort algorithm
+>
+> search algorithm
+
+## job
+Some Code Problems When I Am Applying job.
+
+## effective_c++
+Notes about book ***Effective C++***.
